@@ -1,0 +1,43 @@
+1.  Conduct  research  to  understand  how  HTTP  applications  preserve  the  state 
+of  an  application  across  multiple  request-response  cycles,  especially 
+concerning  user  authentication  and  session  management.  Write  a 
+paragraph (150–250 words)  describing your findings.
+
+ANSWER:
+Sessions is a way to preserve state across multiple request-response cycles. Once the
+client successfully connects to the server (and is authenticated) the server creates a
+session and stores some kind of information (depending on the situation this could be a
+userID or some form of unique object) and stores this in memory or a database. It then
+creates a session ID from this information.
+This can then be sent to the browser in the form of a cookie that gets automatically
+attached to every following request, until terminated. Then all information around the
+request-response cycle is removed from where ever it may be stored (in memory, in a
+database, or Client-side cookies). This is especially helpful when you don't need to have
+users logged in and use a multi-paged web applications and keep track of
+information like multi-step forms as every time you move to the next page, it would have
+forgotten the previous pages interaction.
+If cookies are disabled there is also another method that appends parameters directly to
+the URL query string and every time the user interacts, the server reads the variables
+out of the URL parameters.
+
+For user authentication client-side tokens can be used. Say a user logs in to a web
+application with their username and password and they are validated and authenticated
+and allowed entry. The server then generates a crytographically signed token and sends
+it back to the client (which saves it in either cookies, local storage, session storage
+or just in memory) for the client to use in the Authorization header for ever sebsequent
+request sent from the client to maintain state.
+
+2.  Investigate  and  document  the  procedures  for  performing  Django  database 
+migrations  to  a  server-based  relational  database  like  MariaDB.  Write  a 
+paragraph (150–250 words) describing your findings.
+
+ANSWER:
+The first thing you would need to do is install a database driver within your virtual
+environment so that Django and MariaDB can communicate with one another. Following that
+the 'settings.py' file needs to configured so that the 'DATABASES' dictionary can use
+the 'mysql' backend engine (using 'django.db.backends.mysql'). Then an empty database 
+needs to be created within MariaDB. The created database MUST have the same 'NAME' as set
+within the 'settings.py', 'DATABASE' dictionary default setting.
+After all that, the 'python manage.py makemigrations' and 'python manage.py migrate'
+commands need to be run to complete the process. 
+

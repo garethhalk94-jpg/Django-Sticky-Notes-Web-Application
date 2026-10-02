@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Master Board Title in Marker Font -->
+<h1 class="main-board-header">Sticky Notes Board</h1>
+
+<!-- Grid Container Wrapper -->
+<div class="notes-board-grid">
+    
+    <!-- Add Note Link: Placed inside the layout grid -->
+    <a href="{% url 'note_create' %}" style="text-decoration: none; color: inherit;">
+        <div class="add-note-square-button">
+            <span class="plus-symbol">+</span>
+            <span class="plus-text">Pin New Note</span>
+        </div>
+    </a>
+
+    <!-- Notes Loop -->
+    {% for note in notes %}
+        <a href="{% url 'note_detail' pk=note.pk %}" style="text-decoration: none; color: inherit;">
+            <div class="sticky-note-element">
+                <div>
+                    <h5 class="sticky-note-title text-truncate">{{ note.title }}</h5>
+                    <div class="sticky-note-content sticky-note-content-box">
+                        {{ note.content }}
+                    </div>
+                </div>
+                <div class="sticky-note-author text-end">
+                    {% if note.author and note.author.strip %}
+                        - {{ note.author }}
+                    {% else %}
+                        - Anonymous
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+    {% empty %}
+    <a style="text-decoration: none; color: inherit;">
+        <div class="add-note-square-button">
+            <span class="plus-text">No sticky notes on the board yet.</span>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

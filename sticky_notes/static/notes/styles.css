@@ -1,0 +1,183 @@
+/* ==========================================================================
+   0. DESIGN TOKENS & SYSTEM VARIABLES
+   ========================================================================== */
+:root {
+
+  --font-marker: 'Ink Free', 'Comic Sans MS', cursive;
+  --font-clean: 'Ink Free', sans-serif;
+
+  --bg-board: #fdfdfd;
+  --bg-note: #fffde7;
+  --text-dark: #222222;
+  --text-muted: #6c757d;
+  --border-dashed: rgba(0, 0, 0, 0.1);
+
+  --card-size: 250px;
+}
+
+/* ==========================================================================
+   1. GLOBAL WHITEBOARD-STYLE BACKGROUND
+   ========================================================================== */
+body { 
+  background-color: var(--bg-board); 
+  background-image: 
+      radial-gradient(#e0e0e0 1px, transparent 0),
+      radial-gradient(#e0e0e0 1px, transparent 0);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px; 
+  min-height: 100vh;
+  padding-bottom: 50px;
+} 
+
+main { 
+  margin: 20px; 
+} 
+
+/* ==========================================================================
+   2. HANDWRITTEN MARKER STYLES
+   ========================================================================== */
+.main-board-header {
+  font-family: var(--font-marker);
+  font-size: 3.5rem;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+  color: var(--text-dark);
+}
+
+.sticky-note-title {
+  font-family: var(--font-clean);
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--border-dashed);
+  font-weight: bold;
+  padding: 0 0 4px 0;
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+}
+
+.sticky-note-content {
+  font-family: var(--font-clean);
+  font-size: 1.1rem;
+  color: #333333; 
+}
+
+.sticky-note-author {
+  font-family: var(--font-marker);
+  font-weight: bold;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   3. BOARD GRID LAYOUT SYSTEM
+   ========================================================================== */
+.notes-board-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px; 
+  justify-content: center;
+  padding: 20px;
+}
+
+.sticky-note-element {
+  width: var(--card-size);       
+  height: var(--card-size);      
+  box-sizing: border-box;
+  padding: 8px 20px 20px 20px; 
+  background-color: var(--bg-note); 
+  border: none;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: rotate(-1deg); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sticky-note-element:hover {
+  box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.25);
+  transform: scale(1.04) rotate(1deg);
+  cursor: pointer;
+}
+
+.sticky-note-content-box {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; 
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   4. GIANT DASHED PLUS BUTTON
+   ========================================================================== */
+.add-note-square-button {
+  width: var(--card-size);
+  height: var(--card-size);
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 3px dashed #cccccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.add-note-square-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: var(--text-muted);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+.plus-symbol {
+  font-size: 4.5rem;
+  color: #888888;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.plus-text {
+  font-family: var(--font-clean);
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   5. INTERACTIVE FORM SPECIFIC OVERRIDES (ON-CARD TYPING)
+   ========================================================================== */
+.sticky-note-element input[type="text"],
+.sticky-note-element textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--border-dashed);
+  border-radius: 0;
+  padding: 4px 0;
+  font-family: var(--font-clean);
+  color: #333333;
+  text-align: left;
+}
+
+.sticky-note-element input:focus,
+.sticky-note-element textarea:focus {
+  outline: none;
+  box-shadow: none;
+  border-bottom: 1px dashed var(--text-muted);
+}
+
+.sticky-note-element textarea {
+  resize: none;
+  height: 100px;
+}
+
+.sticky-note-element input::placeholder,
+.sticky-note-element textarea::placeholder {
+  font-family: var(--font-clean);
+  color: #888888;
+  opacity: 0.6;
+  text-align: left;
+}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Master Board Form Banner -->
+<h1 class="main-board-header">Pin to Whiteboard</h1>
+
+<!-- Note Form Wrapper Container -->
+<div class="d-flex flex-column align-items-left justify-content-left my-4 w-100">
+    
+    <!-- Form Container -->
+<form method="post" class="sticky-note-element shadow-lg p-4" style="width: 320px; height: 320px; transform: rotate(1deg); transition: none; margin: 0 auto;">
+        {% csrf_token %}
+        
+        <div>
+            <!-- Header Tag Inside Card -->
+            <legend class="sticky-note-title fs-5 mb-2 text-dark" style="border: none;" style="font-family: 'Ink Free', sans-serif; font-weight: bold;">Draft Note Details</legend>
+            
+            <!-- Form Fields Rendering Loop -->
+            {% for field in form %}
+                <div class="mb-2" style="align-items: left;">
+                    {% if field.name == 'title' %}
+                        {{ field }}
+                    {% elif field.name == 'content' %}
+                        {{ field }}
+                    {% else %}
+                        <div class="small text-muted"></div>
+                        {{ field }}
+                    {% endif %}
+                    
+                    {% if field.errors %}
+                        <div class="text-danger tiny-error-text" style="font-size: 0.75rem;">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Cancel and Pin Note Options -->
+        <div style="position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 20px; width: 100%; box-sizing: border-box;">
+            <a href="{% url 'note_list' %}" class="text-danger" style="font-family: 'Ink Free', sans-serif; font-weight: bold; color: red; text-decoration: none;">Cancel</a>
+
+            <button type="submit" class="text-success p-0" style="font-family: 'Ink Free', sans-serif; font-size: large; color: forestgreen; font-weight: bold;background: none; border: none; text-decoration: none;">Pin Note</button>
+        </div>
+        
+
+    </form>
+</div>
+{% endblock %}

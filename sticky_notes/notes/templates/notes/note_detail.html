@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Master Board Title in Marker Font -->
+<h1 class="main-board-header">Inspecting Note</h1>
+
+<div class="d-flex flex-column align-items-center justify-content-center my-5 w-100 position-relative">
+    
+    <!-- Sticky Note -->
+    <div class="sticky-note-element shadow-lg p-4 position-relative" style="width: 380px; height: 380px; transform: rotate(-2deg); background-color: #fffde7; margin: 0 auto;">
+        
+        <!-- Note Content Area -->
+        <div class="pt-2">
+            <!-- Sticky Note Title -->
+            <h3 class="sticky-note-title" style="font-size: 1.8rem; border-bottom: 2px dashed rgba(0,0,0,0.15);">
+                {{ note.title }}
+            </h3>
+            
+            <!-- Sticky Note Text Body: -->
+            <p class="sticky-note-content mt-3" style="font-size: 1.25rem; line-height: 1.6; white-space: pre-line;">
+                {{ note.content }}
+            </p>
+        </div>
+        
+        <!-- Signature & Timestamp -->
+        <div class="w-100 mt-auto">
+            <div class="sticky-note-author text-end mb-1" style="font-size: 1.15rem;">
+                {% if note.author and note.author.strip %}
+                    - {{ note.author }}
+                {% else %}
+                    - Anonymous
+                {% endif %}
+            </div>
+            
+            <div class="text-muted text-end" style="font-family: 'Ink Free', sans-serif; font-size: 0.75rem; opacity: 0.6; padding-bottom: 30px;">
+                Pinned: {{ note.created_at|date:"d M Y @ H:i" }}
+            </div>
+        </div>
+
+        <!-- Return and Modify -->
+        <div style="position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 20px; width: 100%; box-sizing: border-box;">
+            <!-- Return to board Link (Left) -->
+            <a href="{% url 'note_list' %}" class="text-secondary" style="font-family: 'Ink Free', sans-serif; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
+                Return to Board
+            </a>
+            
+            <div>
+                <!-- Modify Link -->
+                <a href="{% url 'note_update' pk=note.pk %}" class="text-primary me-3" style="font-family: 'Ink Free', sans-serif; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
+                Modify Note
+                </a>
+
+                <!-- Delete Link -->
+                <form action="{% url 'note_delete' pk=note.pk %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="text-danger p-0" style="font-family: 'Ink Free', sans-serif; font-weight: bold; background: none; border: none; font-size: 1.1rem;" onclick="return confirm('Are you sure you want to delete this note?');">
+                        Delete Note
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
